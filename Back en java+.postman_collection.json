@@ -1,0 +1,368 @@
+{
+	"info": {
+		"_postman_id": "e82a4cac-64c3-4e71-8259-08d4006f1b55",
+		"name": "Back en java+",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32976581"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resp = pm.response.json();\r",
+							"if(resp.data!=null){\r",
+							"    let token = resp.data.accessToken;\r",
+							"    pm.globals.set(\"auth-token\", \"bearer \"+ token);\r",
+							"    console.log('se ha actualizado el token')\r",
+							"}else{\r",
+							"    console.log('no se ha actualizado el token');\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"correo\": \"admin@demo.com\", \"password\": \"admin123\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST {{base_url}}/api/auth/login \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{ \"correo\": \"admin@demo.com\", \"password\": \"admin123\" }'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar comerciantes paginado",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth-token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/comerciantes?page=0&size=6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"comerciantes"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "6"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X GET \"{{base_url}}/api/comerciantes?municipio=&page=0&size=10\" \\\r\n     -H \"Authorization: Bearer {{jwt}}\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "resumen ingresos",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth-token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/comerciantes/1/resumen",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"comerciantes",
+						"1",
+						"resumen"
+					]
+				},
+				"description": "Generated from cURL: curl -X GET \"{{base_url}}/api/comerciantes?municipio=&page=0&size=10\" \\\r\n     -H \"Authorization: Bearer {{jwt}}\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Municipios",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth-token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/lov/municipios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lov",
+						"municipios"
+					]
+				},
+				"description": "Generated from cURL: curl -X GET \"{{base_url}}/api/comerciantes?municipio=&page=0&size=10\" \\\r\n     -H \"Authorization: Bearer {{jwt}}\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "crear comerciante",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth-token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n           \"nombreRazonSocial\": \"Nuevo SAS\",\r\n           \"municipio\": \"Cali\",\r\n           \"telefono\": \"6024440000\",\r\n           \"correo\": \"nuevo@demo.com\",\r\n           \"fechaRegistro\": \"2025-06-23\",\r\n           \"estado\": \"A\"\r\n         }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/comerciantes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"comerciantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "consultar comerciante por id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth-token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/comerciantes/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"comerciantes",
+						"11"
+					]
+				},
+				"description": "Generated from cURL: curl -X GET http://localhost:8080/api/comerciantes/<ID> \\\r\n     -H \"Authorization: Bearer <JWT>\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar comerciante",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth-token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n           \r\n           \"municipio\": \"bogota\",\r\n           \"telefono\": \"6024440000\",\r\n           \"correo\": \"nuevo@demo.com\",\r\n           \"fechaRegistro\": \"2025-06-23\",\r\n           \"estado\": \"A\"\r\n         }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/comerciantes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"comerciantes",
+						"1"
+					]
+				},
+				"description": "Generated from cURL: curl -X PUT http://localhost:8080/api/comerciantes/<ID> \\\r\n     -H \"Authorization: Bearer <JWT>\" \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{ \"municipio\": \"Bogotá\" }'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar estado",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth-token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \r\n           \"estado\": \"O\"\r\n         }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/comerciantes/1/estado",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"comerciantes",
+						"1",
+						"estado"
+					]
+				},
+				"description": "Generated from cURL: curl -X PUT http://localhost:8080/api/comerciantes/<ID> \\\r\n     -H \"Authorization: Bearer <JWT>\" \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{ \"municipio\": \"Bogotá\" }'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "eliminar comercainte",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth-token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/comerciantes/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"comerciantes",
+						"9"
+					]
+				},
+				"description": "Generated from cURL: curl -X DELETE http://localhost:8080/api/comerciantes/<ID> \\\r\n     -H \"Authorization: Bearer <JWT>\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Descargar reporte CSV",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth-token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/reportes/comerciantes.csv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"reportes",
+						"comerciantes.csv"
+					]
+				},
+				"description": "Generated from cURL: curl -X GET http://localhost:8080/api/reportes/comerciantes.csv \\\r\n     -H \"Authorization: Bearer <JWT>\" \\\r\n     -o comerciantes.csv\r\n"
+			},
+			"response": []
+		}
+	]
+}

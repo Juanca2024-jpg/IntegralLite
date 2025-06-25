@@ -1,0 +1,92 @@
+/* ───────── CONTENEDOR GENERAL ───────── */
+.merchant-wrapper {
+  padding: 40px 0 80px;                  /* margen inferior extra para la barra fija */
+  background: #ecf0fa;                   /* celeste suave, prototipo */
+  min-height: calc(100vh - 64px);        /* alto de viewport menos header */
+}
+
+/* ───────── TÍTULO ───────── */
+.merchant-wrapper h2 {
+  margin: 0 80px 24px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* ───────── CARD ───────── */
+.merchant-card {
+  max-width: 92%;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #dadada;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  padding: 28px 32px;
+}
+
+/* ───────── GRID (2 col) ───────── */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 32px;
+}
+
+.grid-2col label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a3a3a;
+}
+
+.grid-2col input,
+.grid-2col select {
+  margin-top: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
+}
+
+.grid-2col input:focus,
+.grid-2col select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,.25);
+}
+
+/* Checkbox en línea */
+.checkbox-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+/* ───────── BOTÓN ───────── */
+.btn-blue {
+  margin-top: 28px;
+  padding: 10px 26px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: #0d6efd;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.btn-blue:hover { opacity: .85; }
+
+/* Mensaje error */
+.error {
+  margin-top: 14px;
+  color: #d10000;
+  font-weight: 600;
+}
+
+/* ───────── MÓVIL ───────── */
+@media (max-width: 768px) {
+  .grid-2col { grid-template-columns: 1fr; }
+  .merchant-wrapper h2 { margin: 0 20px 18px; }
+  .merchant-card { padding: 20px; }
+}

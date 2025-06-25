@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  # ---------- BD Oracle ----------
+  oracle:
+    image: gvenzl/oracle-xe:11-slim
+    container_name: oracle-xe
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    volumes:
+      - ./db/init:/container-entrypoint-initdb.d
+    environment:
+      ORACLE_PASSWORD: root
+      APP_USER: app_user
+      APP_USER_PASSWORD: app_pass
+    healthcheck:
+      test: ["CMD-SHELL",
+             "echo 'select 1 from dual;' | sqlplus -s system/root@localhost:1521/XE || exit 1"]
+      interval: 20s
+      retries: 10
+
+  # ---------- API Spring Boot ----------
+  commerce:
+    build:
+      context: ./commerce-service       # <- carpeta donde está tu Dockerfile
+      dockerfile: Dockerfile
+    container_name: commerce-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      oracle:
+        condition: service_healthy      # espera a que Oracle esté sano
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@//oracle:1521/XE
+      SPRING_DATASOURCE_USERNAME: comercio
+      SPRING_DATASOURCE_PASSWORD: comercio_pwd
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: oracle.jdbc.OracleDriver
+      
+      # Configuración JPA
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_JPA_OPEN_IN_VIEW: false
+      SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_TIME_ZONE: UTC
+      JWT_SECRET:  ${JWT_SECRET:-CambiarPorClaveDe512bits}
+      JWT_EXPIRATION_MINUTES: 60
+    # opcional: restart always
+    restart: unless-stopped
+
+networks:
+  default:
+    name: prueba-net
