@@ -2,6 +2,7 @@
 import org.example.commerce.application.mapper.ComercianteMapper;
 import org.example.commerce.application.port.out.ComercianteRepositoryPort;
 import org.example.commerce.application.usecase.ComercianteUseCase;
+import org.example.commerce.infrastructure.adapter.repository.EstablecimientoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -18,6 +19,9 @@ class ComercianteUseCaseTest {
     ComercianteRepositoryPort repo;
 
     @Mock
+    EstablecimientoRepository reposi;
+
+    @Mock
     ComercianteMapper mapper;
 
     ComercianteUseCase useCase;
@@ -25,7 +29,7 @@ class ComercianteUseCaseTest {
     @BeforeEach
     void init() {
         MockitoAnnotations.openMocks(this);
-        useCase = new ComercianteUseCase(repo, mapper);
+        useCase = new ComercianteUseCase(repo,reposi, mapper);
     }
 
     @Test
